@@ -1,0 +1,88 @@
+---
+import ContactCard from "../components/ContactCard.astro";
+import Footer from "../components/Footer.astro";
+import GalleryGrid from "../components/GalleryGrid.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import InfoCard from "../components/InfoCard.astro";
+import JoinCard from "../components/JoinCard.astro";
+import ProcessTimeline from "../components/ProcessTimeline.astro";
+import ServiceGrid from "../components/ServiceGrid.astro";
+import { galleryItems } from "../config/gallery";
+import { homeContent } from "../config/home";
+import { getGoPath } from "../config/links";
+import { siteConfig } from "../config/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title={siteConfig.title} description={siteConfig.description}>
+  <Header />
+
+  <main>
+    <Hero />
+
+    <section class="pt-[10px]">
+      <div class="site-container grid gap-[22px] md:grid-cols-2">
+        <InfoCard id="about" title={homeContent.about.title} className="min-h-[290px]">
+          <div class="intro-surface">{homeContent.about.body}</div>
+        </InfoCard>
+
+        <InfoCard
+          id="notice"
+          title={homeContent.notices.title}
+          moreText="查看更多 ›"
+          moreHref={getGoPath("article")}
+          className="min-h-[290px]"
+        >
+          <div class="mt-2 flex flex-col gap-[14px]">
+            {homeContent.notices.items.map((item) => (
+              <div class="grid grid-cols-[auto_1fr_auto] items-start gap-3 text-[#4d443d]">
+                <div class="mt-0.5">
+                  {item.tag ? <span class="notice-pill">{item.tag}</span> : <span class="block w-8"></span>}
+                </div>
+                <div class="text-[15px] leading-[1.55]">{item.text}</div>
+                <div class="whitespace-nowrap text-[13px] text-[#9b8d84]">{item.date}</div>
+              </div>
+            ))}
+          </div>
+        </InfoCard>
+
+        <InfoCard id="process" title={homeContent.process.title} className="min-h-[290px]">
+          <ProcessTimeline steps={homeContent.process.steps} />
+        </InfoCard>
+
+        <InfoCard id="services" title={homeContent.services.title} className="min-h-[290px]">
+          <ServiceGrid items={homeContent.services.items} />
+        </InfoCard>
+      </div>
+    </section>
+
+    <div class="mt-[18px]">
+      <GalleryGrid
+        id="gallery"
+        title={homeContent.gallery.title}
+        items={galleryItems}
+      />
+    </div>
+
+    <section class="pb-0 pt-[10px]">
+      <div class="site-container grid gap-[22px] md:grid-cols-2">
+        <JoinCard
+          id="join"
+          title={homeContent.join.title}
+          heading={homeContent.join.heading}
+          description={homeContent.join.description}
+          items={homeContent.join.items}
+        />
+
+        <ContactCard
+          id="contact"
+          title={homeContent.contact.title}
+          items={homeContent.contact.items}
+        />
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>

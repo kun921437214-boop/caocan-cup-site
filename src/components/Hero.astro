@@ -1,0 +1,60 @@
+---
+import { homeContent } from "../config/home";
+import { siteConfig } from "../config/site";
+import LinkButton from "./LinkButton.astro";
+---
+
+<section id="home" class="anchor-target relative overflow-hidden pb-7 pt-[34px]">
+  <div class="pointer-events-none absolute bottom-5 left-[-8%] h-[250px] w-[480px] bg-[radial-gradient(ellipse_at_center,rgba(225,180,135,0.18)_0%,rgba(225,180,135,0)_72%)]"></div>
+  <div class="site-container grid items-start gap-[26px] lg:grid-cols-[1fr_1.28fr]">
+    <div class="hero-paper relative px-2 pt-11 lg:pr-2">
+      <h1
+        class="mb-[18px] mt-3 text-[84px] font-extrabold leading-[0.98] tracking-[4px] text-[#8f2318] max-[1200px]:text-[68px] max-[860px]:text-[52px] max-[860px]:tracking-[2px] max-[520px]:text-[42px]"
+        style="text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6);"
+      >
+        {homeContent.hero.title.map((line) => (
+          <>
+            {line}
+            <br />
+          </>
+        ))}
+      </h1>
+
+      <div class="mb-[30px] text-lg tracking-[0.5px] text-[#4a4440] max-[860px]:text-base">
+        {homeContent.hero.subtitle}
+      </div>
+
+      <div class="mb-7 flex flex-wrap gap-5 text-[15px] text-[#b98152] max-[860px]:gap-3">
+        {homeContent.hero.tags.map((tag) => (
+          <span class="flex items-center gap-2">
+            <i class="inline-flex h-[18px] w-[18px] items-center justify-center rounded-full border border-[#efb47d] text-[11px] not-italic text-[#e49042]">
+              ◎
+            </i>
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <div class="flex flex-wrap gap-3 max-[520px]:grid max-[520px]:grid-cols-2">
+        {homeContent.hero.actions.map((action) => (
+          <LinkButton
+            label={action.label}
+            linkKey={action.key}
+            variant={action.variant}
+            className="max-[520px]:min-w-0"
+          />
+        ))}
+      </div>
+    </div>
+
+    <div class="hero-visual-shell">
+      <div class="hero-visual-frame">
+        <img
+          src={siteConfig.heroBanner}
+          alt="第十二届曹灿杯朗诵展示活动主视觉"
+          class="hero-visual-image"
+        />
+      </div>
+    </div>
+  </div>
+</section>

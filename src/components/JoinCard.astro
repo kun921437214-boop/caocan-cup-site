@@ -1,0 +1,38 @@
+---
+import type { JoinItem } from "../config/home";
+
+interface Props {
+  id?: string;
+  title: string;
+  heading: string;
+  description: string;
+  items: JoinItem[];
+}
+
+const { id, title, heading, description, items } = Astro.props;
+---
+
+<article id={id} class="card-panel anchor-target h-full">
+  <div class="mb-[14px] flex items-center justify-between">
+    <div class="card-title">{title}</div>
+  </div>
+
+  <div class="relative mt-2 overflow-hidden rounded-[18px] bg-[linear-gradient(180deg,#fffdf8,#fff7ef)] px-[10px] pb-[14px] pt-[10px] text-center">
+    <div class="text-base font-extrabold text-[#a54a2a]">{heading}</div>
+    <div class="mb-[18px] mt-2 text-[13px] leading-[1.7] text-[#8b7c73]">{description}</div>
+
+    <div class="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+      {items.map((item) => (
+        <div class="join-tile">
+          <div class="mx-auto mb-2.5 flex h-[42px] w-[42px] items-center justify-center rounded-[14px] bg-[linear-gradient(180deg,#ff9d45,#e64c22)] text-xl text-white">
+            {item.icon}
+          </div>
+          <div class="whitespace-nowrap text-[11px] font-extrabold leading-[1.15] tracking-[-0.3px] text-[#7b3724]">
+            {item.title}
+          </div>
+          <div class="mt-1.5 text-xs text-[#9a8a80]">{item.description}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</article>

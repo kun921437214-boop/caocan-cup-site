@@ -1,0 +1,28 @@
+---
+import type { ProcessStep } from "../config/home";
+
+interface Props {
+  steps: ProcessStep[];
+}
+
+const { steps } = Astro.props;
+---
+
+<div class="mt-[30px] grid gap-[18px] text-center sm:grid-cols-2 lg:grid-cols-4">
+  {steps.map((step, index) => (
+    <div class="relative min-w-0 px-0.5">
+      <div
+        class:list={[
+          "gradient-icon mx-auto mb-[18px] h-[78px] w-[78px] text-[34px]",
+          index < steps.length - 1 &&
+            "after:absolute after:right-[-14px] after:top-[18px] after:text-4xl after:font-bold after:text-[#d65b2f] after:content-['›'] max-lg:after:hidden"
+        ]}
+      >
+        {step.icon}
+      </div>
+      <div class="mx-auto block whitespace-nowrap text-center text-lg font-extrabold leading-[1.25] tracking-[-0.2px] text-[#cf2f1f]">
+        {step.title}
+      </div>
+    </div>
+  ))}
+</div>

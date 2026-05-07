@@ -1,0 +1,63 @@
+---
+import type { ContactItem } from "../config/home";
+import { getGoPath, linksMap } from "../config/links";
+
+interface Props {
+  id?: string;
+  title: string;
+  items: ContactItem[];
+}
+
+const { id, title, items } = Astro.props;
+const officialAccount = linksMap["official-account"];
+const article = linksMap.article;
+const miniprogram = linksMap.miniprogram;
+---
+
+<article id={id} class="card-panel anchor-target h-full">
+  <div class="mb-[14px] flex items-center justify-between">
+    <div class="card-title">{title}</div>
+  </div>
+
+  <div class="mt-2 grid items-start gap-[18px] lg:grid-cols-[minmax(0,1fr)_minmax(156px,180px)]">
+    <div class="flex flex-col gap-[14px]">
+      {items.map((item) => (
+        <div class="grid min-w-0 grid-cols-[24px_1fr] gap-[10px]">
+          <div class="contact-icon">{item.icon}</div>
+          <div>
+            <div class="text-sm text-[#8c7c70]">{item.label}</div>
+            <div class="mt-0.5 break-words text-base leading-[1.45] text-[#4b4039]">
+              {item.value}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="flex flex-col items-center gap-2 lg:-ml-[18px]">
+      <a class="qr-link" href={getGoPath(officialAccount.key)}>
+        {officialAccount.qrImage ? (
+          <img
+            src={officialAccount.qrImage}
+            alt={officialAccount.label}
+            class="h-[108px] w-[108px] rounded-[14px] border-8 border-[#fff4ea] object-cover shadow-[0_8px_20px_rgba(165,101,48,0.12)]"
+          />
+        ) : (
+          <div class="qr-placeholder">公众号二维码占位</div>
+        )}
+
+        <div class="text-sm font-semibold text-[#7d4e35]">{officialAccount.label}</div>
+        <p class="m-0 text-[13px] leading-[1.7] text-[#9c8a7d]">
+          关注官方公众号
+          <br />
+          获取更多活动资讯
+        </p>
+      </a>
+
+      <div class="flex flex-wrap justify-center gap-2">
+        <a class="link-chip" href={getGoPath(article.key)}>公众号文章</a>
+        <a class="link-chip" href={getGoPath(miniprogram.key)}>小程序</a>
+      </div>
+    </div>
+  </div>
+</article>

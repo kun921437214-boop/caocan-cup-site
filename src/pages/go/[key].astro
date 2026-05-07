@@ -1,0 +1,147 @@
+---
+import { getGoPath, links } from "../../config/links";
+import { siteConfig } from "../../config/site";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return links.map((link) => ({
+    params: { key: link.key },
+    props: { link }
+  }));
+}
+
+const { link } = Astro.props;
+const canAutoRedirect = link.type === "web" && link.enabled && Boolean(link.href);
+const qrImage = link.qrImage;
+
+const typeCopy = {
+  web: {
+    eyebrow: "网页跳转",
+    title: `正在前往 ${link.label}`,
+    description: link.href
+      ? "页面已为你预留统一中转能力，稍后会自动跳转，也可以手动继续访问。"
+      : "该入口已预留，但真实网页链接尚未配置。后续只需在 links.ts 中补上 href 即可启用。"
+  },
+  miniprogram: {
+    eyebrow: "小程序入口",
+    title: link.label || "小程序名称占位",
+    description: link.note || "请使用微信扫码打开小程序。"
+  },
+  wechat_article: {
+    eyebrow: "公众号文章入口",
+    title: link.label || "文章标题占位",
+    description: link.note || "请使用微信扫码或在微信内打开文章。"
+  },
+  official_account: {
+    eyebrow: "官方公众号入口",
+    title: link.label || "公众号名称占位",
+    description: link.note || "请使用微信扫码关注公众号。"
+  }
+}[link.type];
+---
+
+<BaseLayout title={`${link.label} - ${siteConfig.title}`} description={typeCopy.description}>
+  <Fragment slot="head">
+    {canAutoRedirect ? <meta http-equiv="refresh" content={`1.5;url=${link.href}`} /> : null}
+  </Fragment>
+
+  <main class="min-h-screen bg-[linear-gradient(180deg,#faf7f1_0%,#f7f2eb_100%)] px-5 py-10">
+    <div class="mx-auto flex max-w-3xl flex-col gap-6">
+      <a href="/" class="link-chip w-fit">返回首页</a>
+
+      <section class="go-card">
+        <div class="mb-3 text-sm font-semibold tracking-[0.12em] text-[#c7692f]">
+          {typeCopy.eyebrow}
+        </div>
+        <h1 class="mb-4 text-4xl font-extrabold leading-tight text-[#8f2318] max-[640px]:text-[30px]">
+          {typeCopy.title}
+        </h1>
+        <p class="max-w-2xl text-base leading-8 text-[#5b4d45]">{typeCopy.description}</p>
+
+        {link.type === "web" ? (
+          <div class="mt-8 rounded-3xl border border-[#f0ddd0] bg-[#fffaf5] p-6">
+            <div class="text-sm font-semibold text-[#9b7058]">内部中转地址</div>
+            <div class="mt-2 break-all rounded-2xl bg-white px-4 py-3 text-sm text-[#6a5244] shadow-soft">
+              {getGoPath(link.key)}
+            </div>
+
+            <div class="mt-6 flex flex-wrap gap-3">
+              {link.href ? (
+                <a class="cta-pill" href={link.href} rel="noreferrer" target="_blank">
+                  继续访问
+                </a>
+              ) : (
+                <span class="soft-btn cursor-not-allowed opacity-70">链接待配置</span>
+              )}
+              <a class="soft-btn" href="/">返回首页</a>
+            </div>
+
+            <div class="mt-5 text-sm leading-7 text-[#8f7d71]">
+              配置说明：在 <code>src/config/links.ts</code> 中填写真实 href 后，这个页面就会自动生效。
+            </div>
+          </div>
+        ) : (
+          <div class="mt-8 grid gap-6 rounded-3xl border border-[#f0ddd0] bg-[#fffaf5] p-6 md:grid-cols-[220px_1fr]">
+            <div class="flex flex-col items-center justify-start gap-3">
+              {qrImage ? (
+                <img
+                  src={qrImage}
+                  alt={link.label}
+                  class="h-[180px] w-[180px] rounded-[20px] border-8 border-[#fff4ea] object-cover shadow-[0_8px_20px_rgba(165,101,48,0.12)]"
+                />
+              ) : (
+                <div class="flex h-[180px] w-[180px] items-center justify-center rounded-[20px] border-8 border-[#fff4ea] bg-white p-6 text-center text-sm font-semibold leading-7 text-[#8f2d20] shadow-[0_8px_20px_rgba(165,101,48,0.12)]">
+                  二维码图片占位
+                  <br />
+                  后续可在 links.ts 中替换
+                </div>
+              )}
+              <div class="text-sm text-[#9a8678]">建议使用微信扫码访问</div>
+            </div>
+
+            <div class="flex flex-col justify-center">
+              <div class="rounded-2xl bg-white p-5 shadow-soft">
+                <div class="text-base font-bold text-[#7b3827]">配置字段</div>
+                <div class="mt-3 space-y-2 text-sm leading-7 text-[#6a5649]">
+                  <div>
+                    <strong>key：</strong>
+                    {link.key}
+                  </div>
+                  <div>
+                    <strong>type：</strong>
+                    {link.type}
+                  </div>
+                  <div>
+                    <strong>label：</strong>
+                    {link.label}
+                  </div>
+                  <div>
+                    <strong>note：</strong>
+                    {link.note}
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 flex flex-wrap gap-3">
+                {link.href ? (
+                  <a class="soft-btn" href={link.href} rel="noreferrer" target="_blank">
+                    打开说明链接
+                  </a>
+                ) : null}
+                <a class="soft-btn" href="/">返回首页</a>
+              </div>
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  </main>
+
+  {canAutoRedirect ? (
+    <script define:vars={{ href: link.href }}>
+      window.setTimeout(() => {
+        window.location.href = href;
+      }, 1500);
+    </script>
+  ) : null}
+</BaseLayout>

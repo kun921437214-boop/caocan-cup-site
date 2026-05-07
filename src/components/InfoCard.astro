@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  id?: string;
+  moreText?: string;
+  moreHref?: string;
+  className?: string;
+}
+
+const { title, id, moreText, moreHref, className = "" } = Astro.props;
+---
+
+<article id={id} class:list={["card-panel anchor-target", className]}>
+  <div class="mb-[14px] flex items-center justify-between">
+    <div class="card-title">{title}</div>
+    {moreText && moreHref ? (
+      <a href={moreHref} class="text-sm text-[#9d8370]">{moreText}</a>
+    ) : null}
+  </div>
+  <slot />
+</article>

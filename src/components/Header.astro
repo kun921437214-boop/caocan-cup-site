@@ -1,0 +1,35 @@
+---
+import { getGoPath } from "../config/links";
+import { siteConfig } from "../config/site";
+---
+
+<header class="topbar">
+  <div class="site-container flex h-[84px] items-center justify-between gap-4 max-[860px]:h-auto max-[860px]:flex-wrap max-[860px]:py-3.5">
+    <div class="flex min-w-0 items-center gap-3">
+      <img
+        src={siteConfig.brandLogo}
+        alt="曹灿杯 Logo"
+        class="h-11 w-[72px] flex-none object-contain"
+      />
+      <div class="whitespace-nowrap text-lg font-bold tracking-[0.5px] max-[520px]:text-base">
+        {siteConfig.brandTitle}
+      </div>
+    </div>
+
+    <nav class="flex items-center gap-7 text-base max-[860px]:order-3 max-[860px]:w-full max-[860px]:gap-[22px] max-[860px]:overflow-x-auto max-[860px]:pb-1.5 max-[860px]:text-[15px]">
+      {siteConfig.navigation.map((item, index) => (
+        <a
+          href={item.href}
+          class:list={[
+            "nav-link",
+            index === 0 && "nav-link-active"
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+    </nav>
+
+    <a class="cta-pill" href={getGoPath("signup")}>立即报名</a>
+  </div>
+</header>

@@ -1,0 +1,13 @@
+---
+import { siteConfig } from "../config/site";
+---
+
+<footer class="mt-[18px] bg-[linear-gradient(180deg,#b21112_0%,#9e0f10_100%)] text-white">
+  <div class="site-container py-7">
+    <div class="flex flex-wrap items-center justify-between gap-4 text-[15px] leading-[1.6] opacity-95 max-[520px]:justify-center max-[520px]:gap-2 max-[520px]:text-center max-[520px]:text-[13px]">
+      <div>主办单位：{siteConfig.footer.organizer}</div>
+      <div>备案号：{siteConfig.footer.icp}</div>
+      <div>{siteConfig.footer.copyright}</div>
+    </div>
+  </div>
+</footer>

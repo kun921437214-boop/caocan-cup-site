@@ -1,0 +1,33 @@
+---
+import type { GalleryItem } from "../config/gallery";
+import SectionTitle from "./SectionTitle.astro";
+
+interface Props {
+  id?: string;
+  title: string;
+  items: GalleryItem[];
+}
+
+const { id, title, items } = Astro.props;
+---
+
+<section id={id} class="anchor-target pt-2">
+  <div class="site-container">
+    <div class="mb-[14px] mt-2 flex items-end justify-between">
+      <SectionTitle title={title} />
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      {items.map((item) => (
+        <div class="overflow-hidden rounded-2xl border border-[#ecd8c7] bg-white shadow-soft">
+          <img
+            src={item.src}
+            alt={item.alt}
+            class="h-[164px] w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

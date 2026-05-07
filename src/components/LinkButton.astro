@@ -1,0 +1,23 @@
+---
+import { getGoPath } from "../config/links";
+
+interface Props {
+  label: string;
+  linkKey: string;
+  variant?: "primary" | "secondary";
+  className?: string;
+}
+
+const { label, linkKey, variant = "secondary", className = "" } = Astro.props;
+const classes = [
+  "soft-btn",
+  variant === "primary" ? "soft-btn-primary" : "",
+  className
+]
+  .filter(Boolean)
+  .join(" ");
+---
+
+<a class={classes} href={getGoPath(linkKey)}>
+  <span>{label}</span>
+</a>

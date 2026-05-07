@@ -1,0 +1,35 @@
+---
+import type { ServiceItem } from "../config/home";
+import { getGoPath } from "../config/links";
+
+interface Props {
+  items: ServiceItem[];
+}
+
+const { items } = Astro.props;
+const iconGradients = [
+  "linear-gradient(180deg,#ff9237,#e64420)",
+  "linear-gradient(180deg,#ffbb39,#ee7d00)",
+  "linear-gradient(180deg,#ff6848,#df2d1e)",
+  "linear-gradient(180deg,#66a8ff,#3475ee)"
+];
+---
+
+<div class="mt-4 grid gap-4 md:grid-cols-2">
+  {items.map((item, index) => (
+    <a class="service-item" href={getGoPath(item.linkKey)}>
+      <div
+        class="flex h-[54px] w-[54px] flex-none items-center justify-center rounded-2xl text-[26px] font-bold text-white"
+        style={`background:${iconGradients[index] ?? iconGradients[0]}`}
+      >
+        {item.icon}
+      </div>
+      <div>
+        <div class="mb-1.5 text-[22px] font-extrabold leading-[1.2] text-[#6d2b1f]">
+          {item.title}
+        </div>
+        <div class="text-base leading-[1.45] text-[#7a6e66]">{item.description}</div>
+      </div>
+    </a>
+  ))}
+</div>
