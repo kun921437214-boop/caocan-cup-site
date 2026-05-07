@@ -144,18 +144,19 @@
   }
 
   .intro-surface {
-    @apply relative min-h-[208px] rounded-[18px] px-2 pt-2 text-base leading-[1.95] text-[#534a44];
+    @apply relative min-h-[208px] rounded-[18px] px-2 pb-6 pt-2 text-base leading-[1.95] text-[#534a44];
     background: linear-gradient(180deg, rgba(255, 245, 236, 0.35), rgba(255, 245, 236, 0));
   }
 
   .intro-surface::after {
     content: "";
-    @apply absolute bottom-0 left-0 right-0 h-24 rounded-b-[18px];
+    @apply absolute bottom-0 left-0 right-0 h-14 rounded-b-[18px];
     background:
-      radial-gradient(circle at 18% 70%, rgba(237, 184, 140, 0.35), transparent 18%),
-      radial-gradient(circle at 48% 80%, rgba(240, 198, 158, 0.28), transparent 16%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(247, 232, 215, 0.78));
+      radial-gradient(circle at 18% 70%, rgba(237, 184, 140, 0.18), transparent 18%),
+      radial-gradient(circle at 48% 80%, rgba(240, 198, 158, 0.12), transparent 16%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(247, 232, 215, 0.28));
     pointer-events: none;
+    opacity: 0.45;
   }
 
   .notice-pill {
@@ -273,7 +274,7 @@
   }
 
   .soft-btn,
-  .cta-pill {
+  .soft-btn {
     width: 100%;
     justify-content: center;
   }
@@ -284,5 +285,9 @@
 
   .link-chip {
     width: 100%;
+  }
+
+  .intro-surface::after {
+    display: none;
   }
 }

@@ -32,7 +32,7 @@ const officialAccount = linksMap["official-account"];
       ))}
     </div>
 
-    <div class="flex flex-col items-center gap-2 md:-ml-[8px]">
+    <div class="flex flex-col items-center gap-2 pt-6 md:-ml-[8px] md:pt-8">
       <a class="qr-link max-[520px]:max-w-[120px] max-[520px]:gap-2 max-[520px]:px-2.5 max-[520px]:py-3" href={getGoPath(officialAccount.key)}>
         {officialAccount.qrImage ? (
           <img
@@ -45,11 +45,6 @@ const officialAccount = linksMap["official-account"];
         )}
 
         <div class="text-center text-sm font-semibold text-[#7d4e35] max-[520px]:text-[12px]">{officialAccount.label}</div>
-        <p class="m-0 text-center text-[13px] leading-[1.7] text-[#9c8a7d] max-[520px]:hidden">
-          关注官方公众号
-          <br />
-          获取更多活动资讯
-        </p>
       </a>
     </div>
   </div>

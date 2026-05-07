@@ -19,11 +19,11 @@ const { id, title, items } = Astro.props;
 
     <div class="grid grid-cols-2 gap-4 max-[479px]:grid-cols-1 xl:grid-cols-5">
       {items.map((item) => (
-        <div class="overflow-hidden rounded-2xl border border-[#ecd8c7] bg-white shadow-soft">
+        <div class="aspect-video overflow-hidden rounded-2xl border border-[#ecd8c7] bg-white shadow-soft">
           <img
             src={item.src}
             alt={item.alt}
-            class="h-[164px] w-full object-cover max-[520px]:h-[136px]"
+            class="h-full w-full object-cover"
             loading="lazy"
           />
         </div>

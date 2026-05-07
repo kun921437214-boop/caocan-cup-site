@@ -24,9 +24,9 @@ import LinkButton from "./LinkButton.astro";
         {homeContent.hero.subtitle}
       </div>
 
-      <div class="mb-7 flex flex-wrap gap-5 text-[15px] text-[#b98152] max-[860px]:gap-3 max-[520px]:grid max-[520px]:grid-cols-2 max-[520px]:gap-y-2 max-[520px]:text-sm">
+      <div class="mb-7 flex flex-wrap gap-5 text-[15px] text-[#b98152] max-[860px]:gap-3 max-[520px]:flex-nowrap max-[520px]:justify-between max-[520px]:gap-1.5 max-[520px]:overflow-x-auto max-[520px]:text-[13px]">
         {homeContent.hero.tags.map((tag) => (
-          <span class="flex items-center gap-2">
+          <span class="flex shrink-0 items-center gap-1.5">
             <i class="inline-flex h-[18px] w-[18px] items-center justify-center rounded-full border border-[#efb47d] text-[11px] not-italic text-[#e49042]">
               ◎
             </i>
@@ -35,7 +35,7 @@ import LinkButton from "./LinkButton.astro";
         ))}
       </div>
 
-      <div class="flex flex-wrap gap-3 max-[520px]:grid max-[520px]:grid-cols-1">
+      <div class="flex flex-wrap gap-3 max-[520px]:grid max-[520px]:grid-cols-2">
         {homeContent.hero.actions.map((action) => (
           <LinkButton
             label={action.label}
