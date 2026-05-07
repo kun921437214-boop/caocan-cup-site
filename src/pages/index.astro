@@ -23,7 +23,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <section class="pt-[10px]">
       <div class="site-container grid gap-[22px] md:grid-cols-2">
-        <InfoCard id="about" title={homeContent.about.title} className="min-h-[290px]">
+        <InfoCard id="about" title={homeContent.about.title} className="min-h-[290px] max-md:min-h-0">
           <div class="intro-surface">{homeContent.about.body}</div>
         </InfoCard>
 
@@ -32,26 +32,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           title={homeContent.notices.title}
           moreText="查看更多 ›"
           moreHref={getGoPath("article")}
-          className="min-h-[290px]"
+          className="min-h-[290px] max-md:min-h-0"
         >
           <div class="mt-2 flex flex-col gap-[14px]">
             {homeContent.notices.items.map((item) => (
-              <div class="grid grid-cols-[auto_1fr_auto] items-start gap-3 text-[#4d443d]">
+              <div class="grid grid-cols-[auto_1fr_auto] items-start gap-3 text-[#4d443d] max-[520px]:grid-cols-[auto_1fr]">
                 <div class="mt-0.5">
                   {item.tag ? <span class="notice-pill">{item.tag}</span> : <span class="block w-8"></span>}
                 </div>
                 <div class="text-[15px] leading-[1.55]">{item.text}</div>
-                <div class="whitespace-nowrap text-[13px] text-[#9b8d84]">{item.date}</div>
+                <div class="whitespace-nowrap text-[13px] text-[#9b8d84] max-[520px]:col-start-2 max-[520px]:row-start-2">
+                  {item.date}
+                </div>
               </div>
             ))}
           </div>
         </InfoCard>
 
-        <InfoCard id="process" title={homeContent.process.title} className="min-h-[290px]">
+        <InfoCard id="process" title={homeContent.process.title} className="min-h-[290px] max-md:min-h-0">
           <ProcessTimeline steps={homeContent.process.steps} />
         </InfoCard>
 
-        <InfoCard id="services" title={homeContent.services.title} className="min-h-[290px]">
+        <InfoCard id="services" title={homeContent.services.title} className="min-h-[290px] max-md:min-h-0">
           <ServiceGrid items={homeContent.services.items} />
         </InfoCard>
       </div>

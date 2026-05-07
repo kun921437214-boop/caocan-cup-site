@@ -26,6 +26,7 @@
       radial-gradient(circle at 20% 10%, rgba(255, 135, 30, 0.08), transparent 22%),
       radial-gradient(circle at 80% 15%, rgba(212, 34, 31, 0.06), transparent 20%),
       linear-gradient(180deg, #faf7f1 0%, #f7f2eb 100%);
+    overflow-x: hidden;
   }
 
   a {
@@ -236,5 +237,52 @@
 
   .nav-link-active::after {
     bottom: -8px;
+  }
+
+  .hero-visual-shell {
+    border-radius: 28px;
+    padding: 8px;
+  }
+
+  .hero-visual-frame {
+    border-radius: 22px;
+  }
+
+  .hero-visual-image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .intro-surface {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 520px) {
+  .site-container {
+    width: min(1200px, calc(100% - 20px));
+  }
+
+  .card-panel {
+    border-radius: 20px;
+    padding: 16px 14px 14px;
+  }
+
+  .card-title,
+  .section-title-main {
+    font-size: 20px;
+  }
+
+  .soft-btn,
+  .cta-pill {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .qr-link {
+    max-width: 100%;
+  }
+
+  .link-chip {
+    width: 100%;
   }
 }

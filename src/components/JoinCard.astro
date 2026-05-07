@@ -21,16 +21,16 @@ const { id, title, heading, description, items } = Astro.props;
     <div class="text-base font-extrabold text-[#a54a2a]">{heading}</div>
     <div class="mb-[18px] mt-2 text-[13px] leading-[1.7] text-[#8b7c73]">{description}</div>
 
-    <div class="grid gap-2.5 sm:grid-cols-2 xl:grid-cols-4">
+    <div class="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
       {items.map((item) => (
-        <div class="join-tile">
-          <div class="mx-auto mb-2.5 flex h-[42px] w-[42px] items-center justify-center rounded-[14px] bg-[linear-gradient(180deg,#ff9d45,#e64c22)] text-xl text-white">
+        <div class="join-tile max-[520px]:px-2 max-[520px]:pb-3 max-[520px]:pt-4">
+          <div class="mx-auto mb-2.5 flex h-[42px] w-[42px] items-center justify-center rounded-[14px] bg-[linear-gradient(180deg,#ff9d45,#e64c22)] text-xl text-white max-[520px]:h-10 max-[520px]:w-10 max-[520px]:text-lg">
             {item.icon}
           </div>
-          <div class="whitespace-nowrap text-[11px] font-extrabold leading-[1.15] tracking-[-0.3px] text-[#7b3724]">
+          <div class="text-[11px] font-extrabold leading-[1.25] tracking-[-0.2px] text-[#7b3724] max-[520px]:text-[13px]">
             {item.title}
           </div>
-          <div class="mt-1.5 text-xs text-[#9a8a80]">{item.description}</div>
+          <div class="mt-1.5 text-xs text-[#9a8a80] max-[520px]:text-[12px]">{item.description}</div>
         </div>
       ))}
     </div>
