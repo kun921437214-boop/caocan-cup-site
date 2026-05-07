@@ -13,6 +13,7 @@ export function getStaticPaths() {
 const { link } = Astro.props;
 const canAutoRedirect = link.type === "web" && link.enabled && Boolean(link.href);
 const canAttemptMiniProgram = link.type === "miniprogram" && link.enabled && Boolean(link.href);
+const silentRedirect = canAutoRedirect || canAttemptMiniProgram;
 const qrImage = link.qrImage;
 
 const typeCopy = {
@@ -43,14 +44,24 @@ const typeCopy = {
 
 <BaseLayout title={`${link.label} - ${siteConfig.title}`} description={typeCopy.description}>
   <Fragment slot="head">
-    {canAutoRedirect ? <meta http-equiv="refresh" content={`1.5;url=${link.href}`} /> : null}
+    {canAutoRedirect ? <meta http-equiv="refresh" content={`0;url=${link.href}`} /> : null}
   </Fragment>
 
   <main class="min-h-screen bg-[linear-gradient(180deg,#faf7f1_0%,#f7f2eb_100%)] px-5 py-10">
     <div class="mx-auto flex max-w-3xl flex-col gap-6">
-      <a href="/" class="link-chip w-fit">返回首页</a>
+      {silentRedirect ? (
+        <div
+          id="redirecting-state"
+          class="flex min-h-[50vh] flex-col items-center justify-center gap-4 text-center"
+        >
+          <div class="h-12 w-12 animate-spin rounded-full border-4 border-[#efceb7] border-t-[#d2231f]"></div>
+          <div class="text-lg font-bold text-[#8f2318]">
+            {link.type === "miniprogram" ? "正在尝试打开小程序..." : `正在前往 ${link.label}...`}
+          </div>
+        </div>
+      ) : null}
 
-      <section class="go-card">
+      <section id="fallback-card" class:list={["go-card", silentRedirect && "hidden"]}>
         <div class="mb-3 text-sm font-semibold tracking-[0.12em] text-[#c7692f]">
           {typeCopy.eyebrow}
         </div>
@@ -163,20 +174,31 @@ const typeCopy = {
 
   {canAutoRedirect ? (
     <script define:vars={{ href: link.href }}>
-      window.setTimeout(() => {
-        window.location.href = href;
-      }, 1500);
+      window.location.replace(href);
     </script>
   ) : canAttemptMiniProgram ? (
     <script define:vars={{ href: link.href }}>
+      const redirectingState = document.getElementById("redirecting-state");
+      const fallbackCard = document.getElementById("fallback-card");
+      const launchHref = href.startsWith("#") ? href.slice(1) : href;
       const ua = window.navigator.userAgent || "";
       const isWeChat = /MicroMessenger/i.test(ua);
+      const canDirectOpen =
+        isWeChat ||
+        launchHref.startsWith("weixin://") ||
+        launchHref.startsWith("https://wxaurl.cn") ||
+        launchHref.startsWith("小程序://");
 
-      if (isWeChat || href.startsWith("weixin://") || href.startsWith("https://wxaurl.cn")) {
+      if (canDirectOpen) {
         window.setTimeout(() => {
-          window.location.href = href;
-        }, 500);
+          window.location.href = launchHref;
+        }, 80);
       }
+
+      window.setTimeout(() => {
+        redirectingState?.classList.add("hidden");
+        fallbackCard?.classList.remove("hidden");
+      }, canDirectOpen ? 1200 : 50);
     </script>
   ) : null}
 </BaseLayout>
