@@ -39,18 +39,18 @@ export const links: LinkItem[] = [
     key: "live",
     label: "观看直播",
     type: "web",
-    href: "",
+    href: "https://appkyc5g6to8677.h5.xiaoeknow.com/p/course/big_column/p_686b2a2ee4b0694c5afc8c1e",
     qrImage: "",
-    note: "后续可替换为真实直播链接。",
+    note: "直播入口已配置，点击后将通过中转页自动跳转。",
     enabled: true
   },
   {
     key: "books",
     label: "指导用书",
     type: "web",
-    href: "",
+    href: "https://appkyc5g6to8677.h5.xiaoeknow.com/p/decorate/page/eyJpZCI6MzAyODcyNCwiY2hhbm5lbF9pZCI6IiJ9",
     qrImage: "",
-    note: "后续可替换为真实用书购买或介绍页面链接。",
+    note: "指导用书入口已配置，点击后将通过中转页自动跳转。",
     enabled: true
   },
   {
