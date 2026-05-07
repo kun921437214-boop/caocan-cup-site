@@ -1,5 +1,5 @@
 ---
-import { getGoPath, links } from "../../config/links";
+import { links } from "../../config/links";
 import { siteConfig } from "../../config/site";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
@@ -12,9 +12,8 @@ export function getStaticPaths() {
 
 const { link } = Astro.props;
 const canAutoRedirect = link.type === "web" && link.enabled && Boolean(link.href);
-const canAttemptMiniProgram = link.type === "miniprogram" && link.enabled && Boolean(link.href);
-const silentRedirect = canAutoRedirect || canAttemptMiniProgram;
 const qrImage = link.qrImage;
+const isScanGuide = link.type !== "web";
 
 const typeCopy = {
   web: {
@@ -40,6 +39,25 @@ const typeCopy = {
     description: link.note || "请使用微信扫码关注公众号。"
   }
 }[link.type];
+
+const guideTitle =
+  link.type === "miniprogram"
+    ? `微信扫码进入${link.label}`
+    : link.type === "wechat_article"
+      ? "微信扫码查看文章"
+      : "微信扫码访问";
+
+const guideDescription =
+  link.type === "miniprogram"
+    ? "当前入口已切换为二维码访问模式，请直接使用微信扫一扫进入对应小程序页面。"
+    : typeCopy.description;
+
+const guideSteps =
+  link.type === "miniprogram"
+    ? ["打开微信扫一扫", "扫描下方二维码", `进入${link.label}页面`]
+    : link.type === "wechat_article"
+      ? ["打开微信扫一扫", "扫描下方二维码", "在微信内查看文章内容"]
+      : ["打开微信扫一扫", "扫描下方二维码", `完成${link.label}访问`];
 ---
 
 <BaseLayout title={`${link.label} - ${siteConfig.title}`} description={typeCopy.description}>
@@ -49,156 +67,122 @@ const typeCopy = {
 
   <main class="min-h-screen bg-[linear-gradient(180deg,#faf7f1_0%,#f7f2eb_100%)] px-5 py-10">
     <div class="mx-auto flex max-w-3xl flex-col gap-6">
-      {silentRedirect ? (
-        <div
-          id="redirecting-state"
-          class="flex min-h-[50vh] flex-col items-center justify-center gap-4 text-center"
-        >
+      {canAutoRedirect ? (
+        <div class="flex min-h-[50vh] flex-col items-center justify-center gap-4 text-center">
           <div class="h-12 w-12 animate-spin rounded-full border-4 border-[#efceb7] border-t-[#d2231f]"></div>
-          <div class="text-lg font-bold text-[#8f2318]">
-            {link.type === "miniprogram" ? "正在尝试打开小程序..." : `正在前往 ${link.label}...`}
-          </div>
+          <div class="text-lg font-bold text-[#8f2318]">{`正在前往 ${link.label}...`}</div>
         </div>
-      ) : null}
+      ) : (
+        <section class="go-card">
+          <a href="/" class="link-chip mb-6 w-fit">返回首页</a>
 
-      <section id="fallback-card" class:list={["go-card", silentRedirect && "hidden"]}>
-        <div class="mb-3 text-sm font-semibold tracking-[0.12em] text-[#c7692f]">
-          {typeCopy.eyebrow}
-        </div>
-        <h1 class="mb-4 text-4xl font-extrabold leading-tight text-[#8f2318] max-[640px]:text-[30px]">
-          {typeCopy.title}
-        </h1>
-        <p class="max-w-2xl text-base leading-8 text-[#5b4d45]">{typeCopy.description}</p>
-
-        {link.type === "web" ? (
-          <div class="mt-8 rounded-3xl border border-[#f0ddd0] bg-[#fffaf5] p-6">
-            <div class="text-sm font-semibold text-[#9b7058]">内部中转地址</div>
-            <div class="mt-2 break-all rounded-2xl bg-white px-4 py-3 text-sm text-[#6a5244] shadow-soft">
-              {getGoPath(link.key)}
-            </div>
-
-            <div class="mt-6 flex flex-wrap gap-3">
-              {link.href ? (
-                <a class="cta-pill" href={link.href} rel="noreferrer" target="_blank">
-                  继续访问
-                </a>
-              ) : (
-                <span class="soft-btn cursor-not-allowed opacity-70">链接待配置</span>
-              )}
-              <a class="soft-btn" href="/">返回首页</a>
-            </div>
-
-            <div class="mt-5 text-sm leading-7 text-[#8f7d71]">
-              配置说明：在 <code>src/config/links.ts</code> 中填写真实 href 后，这个页面就会自动生效。
-            </div>
+          <div class="mb-3 text-sm font-semibold tracking-[0.12em] text-[#c7692f]">
+            {typeCopy.eyebrow}
           </div>
-        ) : (
-          <div class="mt-8 grid gap-6 rounded-3xl border border-[#f0ddd0] bg-[#fffaf5] p-6 md:grid-cols-[220px_1fr]">
-            <div class="flex flex-col items-center justify-start gap-3">
-              {qrImage ? (
-                <img
-                  src={qrImage}
-                  alt={link.label}
-                  class="h-[180px] w-[180px] rounded-[20px] border-8 border-[#fff4ea] object-cover shadow-[0_8px_20px_rgba(165,101,48,0.12)]"
-                />
-              ) : (
-                <div class="flex h-[180px] w-[180px] items-center justify-center rounded-[20px] border-8 border-[#fff4ea] bg-white p-6 text-center text-sm font-semibold leading-7 text-[#8f2d20] shadow-[0_8px_20px_rgba(165,101,48,0.12)]">
-                  二维码图片占位
-                  <br />
-                  后续可在 links.ts 中替换
+
+          {isScanGuide ? (
+            <>
+              <h1 class="text-4xl font-extrabold leading-tight text-[#8f2318] max-[640px]:text-[30px]">
+                {guideTitle}
+              </h1>
+              <p class="mt-4 max-w-2xl text-base leading-8 text-[#5b4d45]">{guideDescription}</p>
+
+              <div class="mt-8 overflow-hidden rounded-[32px] border border-[#f0ddd0] bg-[linear-gradient(180deg,#fffaf4_0%,#fff5ec_100%)] shadow-soft">
+                <div class="border-b border-[#f2e0d2] bg-[radial-gradient(circle_at_top_right,rgba(255,162,79,0.14),transparent_30%),linear-gradient(180deg,rgba(255,255,255,0.86),rgba(255,250,244,0.72))] px-6 py-6 max-[640px]:px-5">
+                  <div class="inline-flex items-center rounded-full bg-[#fff1e4] px-3 py-1 text-xs font-bold tracking-[0.08em] text-[#c85f2a]">
+                    微信扫码入口
+                  </div>
+                  <div class="mt-4 text-[15px] leading-7 text-[#65554a]">
+                    请直接扫码进入，如当前设备不便扫码，也可以截图后使用微信扫一扫中的相册识别功能。
+                  </div>
                 </div>
-              )}
-              <div class="text-sm text-[#9a8678]">建议使用微信扫码访问</div>
-            </div>
 
-            <div class="flex flex-col justify-center">
-              <div class="rounded-2xl bg-white p-5 shadow-soft">
-                <div class="text-base font-bold text-[#7b3827]">配置字段</div>
-                <div class="mt-3 space-y-2 text-sm leading-7 text-[#6a5649]">
-                  <div>
-                    <strong>key：</strong>
-                    {link.key}
-                  </div>
-                  <div>
-                    <strong>type：</strong>
-                    {link.type}
-                  </div>
-                  <div>
-                    <strong>label：</strong>
-                    {link.label}
-                  </div>
-                  {link.miniProgramPath ? (
-                    <div>
-                      <strong>path：</strong>
-                      {link.miniProgramPath}
+                <div class="grid gap-6 p-6 md:grid-cols-[240px_1fr] max-[640px]:p-5">
+                  <div class="flex flex-col items-center rounded-[28px] border border-[#f1dfd1] bg-white px-5 py-6 shadow-[0_10px_24px_rgba(183,131,86,0.08)]">
+                    <div class="mb-4 text-sm font-bold tracking-[0.06em] text-[#a35a2d]">请微信扫码</div>
+                    {qrImage ? (
+                      <img
+                        src={qrImage}
+                        alt={link.label}
+                        class="h-[190px] w-[190px] rounded-[22px] border-8 border-[#fff4ea] object-cover shadow-[0_8px_20px_rgba(165,101,48,0.12)]"
+                      />
+                    ) : (
+                      <div class="flex h-[190px] w-[190px] items-center justify-center rounded-[22px] border-8 border-[#fff4ea] bg-white p-6 text-center text-sm font-semibold leading-7 text-[#8f2d20] shadow-[0_8px_20px_rgba(165,101,48,0.12)]">
+                        二维码图片占位
+                        <br />
+                        后续可替换真实二维码
+                      </div>
+                    )}
+                    <div class="mt-4 rounded-2xl bg-[#fff8f2] px-4 py-3 text-center text-sm leading-7 text-[#8e7b6d]">
+                      推荐在微信内打开，扫码后可直接进入
                     </div>
-                  ) : null}
-                  <div>
-                    <strong>note：</strong>
-                    {link.note}
+                  </div>
+
+                  <div class="flex flex-col gap-4">
+                    <div class="rounded-[26px] border border-[#f1dfd1] bg-white p-5 shadow-[0_10px_24px_rgba(183,131,86,0.08)]">
+                      <div class="text-lg font-bold text-[#7b3827]">使用方式</div>
+                      <div class="mt-4 grid gap-3">
+                        {guideSteps.map((step, index) => (
+                          <div class="flex items-start gap-3 rounded-2xl bg-[#fff8f2] px-4 py-3">
+                            <div class="flex h-7 w-7 flex-none items-center justify-center rounded-full bg-[linear-gradient(180deg,#ff7f2d,#df2d1e)] text-sm font-bold text-white">
+                              {index + 1}
+                            </div>
+                            <div class="pt-0.5 text-sm leading-6 text-[#68564a]">{step}</div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div class="rounded-[26px] border border-[#f1dfd1] bg-white p-5 shadow-[0_10px_24px_rgba(183,131,86,0.08)]">
+                      <div class="text-lg font-bold text-[#7b3827]">温馨提示</div>
+                      <div class="mt-3 text-sm leading-7 text-[#7e6a5d]">
+                        {link.type === "miniprogram"
+                          ? "若你当前不在微信内，建议先保存二维码，再使用微信扫一扫中的相册入口识别。"
+                          : link.note}
+                      </div>
+                      {link.miniProgramPath ? (
+                        <div class="mt-4 rounded-2xl bg-[#fff8f2] px-4 py-3 text-xs leading-6 text-[#9a8678]">
+                          当前对应页面：{link.miniProgramPath}
+                        </div>
+                      ) : null}
+                    </div>
+
+                    <div class="flex flex-wrap gap-3">
+                      <a class="soft-btn" href="/">返回首页</a>
+                    </div>
                   </div>
                 </div>
               </div>
+            </>
+          ) : (
+            <>
+              <h1 class="mb-4 text-4xl font-extrabold leading-tight text-[#8f2318] max-[640px]:text-[30px]">
+                {typeCopy.title}
+              </h1>
+              <p class="max-w-2xl text-base leading-8 text-[#5b4d45]">{typeCopy.description}</p>
 
-              <div class="mt-5 flex flex-wrap gap-3">
-                {link.type === "miniprogram" ? (
-                  canAttemptMiniProgram ? (
-                    <a class="cta-pill" href={link.href} rel="noreferrer">
-                      尝试打开小程序
+              <div class="mt-8 rounded-3xl border border-[#f0ddd0] bg-[#fffaf5] p-6">
+                <div class="mt-6 flex flex-wrap gap-3">
+                  {link.href ? (
+                    <a class="cta-pill" href={link.href} rel="noreferrer" target="_blank">
+                      继续访问
                     </a>
                   ) : (
-                    <span class="soft-btn cursor-not-allowed opacity-70">待补直达链接</span>
-                  )
-                ) : link.href ? (
-                  <a class="soft-btn" href={link.href} rel="noreferrer" target="_blank">
-                    打开说明链接
-                  </a>
-                ) : null}
-                <a class="soft-btn" href="/">返回首页</a>
-              </div>
-
-              {link.type === "miniprogram" ? (
-                <div class="mt-5 text-sm leading-7 text-[#8f7d71]">
-                  当前已写入页面路径。
-                  {canAttemptMiniProgram
-                    ? " 若设备支持，会优先尝试直接拉起小程序；若未成功，请使用左侧二维码进入。"
-                    : " 但浏览器无法仅通过页面 path 直接拉起小程序，后续补充微信官方 URL Link 或 URL Scheme 后，这里就会自动优先直达。"}
+                    <span class="soft-btn cursor-not-allowed opacity-70">链接待配置</span>
+                  )}
+                  <a class="soft-btn" href="/">返回首页</a>
                 </div>
-              ) : null}
-            </div>
-          </div>
-        )}
-      </section>
+              </div>
+            </>
+          )}
+        </section>
+      )}
     </div>
   </main>
 
   {canAutoRedirect ? (
     <script define:vars={{ href: link.href }}>
       window.location.replace(href);
-    </script>
-  ) : canAttemptMiniProgram ? (
-    <script define:vars={{ href: link.href }}>
-      const redirectingState = document.getElementById("redirecting-state");
-      const fallbackCard = document.getElementById("fallback-card");
-      const launchHref = href.startsWith("#") ? href.slice(1) : href;
-      const ua = window.navigator.userAgent || "";
-      const isWeChat = /MicroMessenger/i.test(ua);
-      const canDirectOpen =
-        isWeChat ||
-        launchHref.startsWith("weixin://") ||
-        launchHref.startsWith("https://wxaurl.cn") ||
-        launchHref.startsWith("小程序://");
-
-      if (canDirectOpen) {
-        window.setTimeout(() => {
-          window.location.href = launchHref;
-        }, 80);
-      }
-
-      window.setTimeout(() => {
-        redirectingState?.classList.add("hidden");
-        fallbackCard?.classList.remove("hidden");
-      }, canDirectOpen ? 1200 : 50);
     </script>
   ) : null}
 </BaseLayout>
