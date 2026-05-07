@@ -4,19 +4,26 @@ import { siteConfig } from "../config/site";
 ---
 
 <header class="topbar">
-  <div class="site-container flex h-[84px] items-center justify-between gap-4 max-[860px]:grid max-[860px]:grid-cols-[minmax(0,1fr)_auto] max-[860px]:items-center max-[860px]:gap-3 max-[860px]:py-3.5">
-    <div class="flex min-w-0 items-center gap-3 max-[640px]:gap-2">
+  <div class="site-container flex h-[84px] items-center justify-between gap-4 max-[860px]:grid max-[860px]:grid-cols-[minmax(0,1fr)_auto] max-[860px]:grid-rows-[auto_auto] max-[860px]:items-center max-[860px]:gap-x-3 max-[860px]:gap-y-2 max-[860px]:py-3.5">
+    <div class="flex min-w-0 items-center gap-3 max-[860px]:col-start-1 max-[860px]:row-start-1 max-[640px]:gap-2">
       <img
         src={siteConfig.brandLogo}
         alt="曹灿杯 Logo"
         class="h-11 w-[72px] flex-none object-contain max-[640px]:h-8 max-[640px]:w-[54px]"
       />
-      <div class="text-lg font-bold tracking-[0.5px] max-[640px]:text-[15px] max-[640px]:leading-tight">
+      <div class="text-lg font-bold tracking-[0.5px] max-[860px]:text-[16px] max-[860px]:leading-tight max-[640px]:text-[15px]">
         {siteConfig.brandTitle}
       </div>
     </div>
 
-    <nav class="flex items-center gap-7 text-base max-[860px]:col-span-2 max-[860px]:w-full max-[860px]:justify-start max-[860px]:gap-[18px] max-[860px]:overflow-x-auto max-[860px]:pb-1.5 max-[860px]:pt-1 max-[860px]:text-[15px] max-[860px]:whitespace-nowrap">
+    <a
+      class="cta-pill max-[860px]:col-start-2 max-[860px]:row-start-1 max-[860px]:justify-self-end max-[860px]:self-center max-[640px]:w-auto max-[640px]:min-w-[108px] max-[640px]:px-5 max-[640px]:py-2.5 max-[640px]:text-sm"
+      href={getGoPath("signup")}
+    >
+      立即报名
+    </a>
+
+    <nav class="flex items-center gap-7 text-base max-[860px]:col-span-2 max-[860px]:row-start-2 max-[860px]:w-full max-[860px]:justify-start max-[860px]:gap-[18px] max-[860px]:overflow-x-auto max-[860px]:pb-1.5 max-[860px]:pt-1 max-[860px]:text-[15px] max-[860px]:whitespace-nowrap">
       {siteConfig.navigation.map((item, index) => (
         <a
           href={item.href}
@@ -29,7 +36,5 @@ import { siteConfig } from "../config/site";
         </a>
       ))}
     </nav>
-
-    <a class="cta-pill max-[640px]:w-auto max-[640px]:min-w-[108px] max-[640px]:px-5 max-[640px]:py-2.5 max-[640px]:text-sm" href={getGoPath("signup")}>立即报名</a>
   </div>
 </header>
