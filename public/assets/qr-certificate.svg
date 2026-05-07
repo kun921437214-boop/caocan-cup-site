@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="360" viewBox="0 0 360 360" role="img" aria-labelledby="title desc">
+  <title id="title">证书查询二维码占位</title>
+  <desc id="desc">用于替换为真实证书查询小程序二维码</desc>
+  <rect width="360" height="360" rx="28" fill="#fff8f1"/>
+  <rect x="18" y="18" width="324" height="324" rx="24" fill="#ffffff" stroke="#f0ddd0" stroke-width="8"/>
+  <rect x="58" y="58" width="244" height="244" rx="18" fill="#111111"/>
+  <g fill="#ffffff">
+    <rect x="82" y="82" width="48" height="48" rx="6"/>
+    <rect x="230" y="82" width="48" height="48" rx="6"/>
+    <rect x="82" y="230" width="48" height="48" rx="6"/>
+    <rect x="146" y="90" width="26" height="26" rx="4"/>
+    <rect x="188" y="90" width="26" height="26" rx="4"/>
+    <rect x="146" y="132" width="26" height="26" rx="4"/>
+    <rect x="188" y="132" width="26" height="26" rx="4"/>
+    <rect x="146" y="174" width="26" height="26" rx="4"/>
+    <rect x="188" y="174" width="26" height="26" rx="4"/>
+    <rect x="146" y="216" width="26" height="26" rx="4"/>
+    <rect x="188" y="216" width="26" height="26" rx="4"/>
+  </g>
+  <text x="180" y="154" text-anchor="middle" font-size="22" font-weight="700" fill="#8f2d20">证书查询</text>
+  <text x="180" y="188" text-anchor="middle" font-size="18" fill="#8f2d20">二维码占位</text>
+  <circle cx="268" cy="268" r="32" fill="#22c55e"/>
+  <path d="M258 282c0-9 7-16 16-16 2 0 4 .4 5.8 1.1-1.6-6.1-7.2-10.6-13.8-10.6-7.8 0-14 6.2-14 14 0 4.1 1.8 7.8 4.6 10.5H258Z" fill="#fff"/>
+  <path d="M282 253.5c7.5 0 13.5 6 13.5 13.5s-6 13.5-13.5 13.5c-3.8 0-7.2-1.5-9.7-4.1 1.6.7 3.4 1.1 5.2 1.1 7 0 12.7-5.7 12.7-12.7 0-4.5-2.3-8.4-5.8-10.8.5-.3 1-.5 1.6-.5Z" fill="#fff"/>
+</svg>

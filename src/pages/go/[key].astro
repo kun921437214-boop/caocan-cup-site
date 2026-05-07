@@ -12,6 +12,7 @@ export function getStaticPaths() {
 
 const { link } = Astro.props;
 const canAutoRedirect = link.type === "web" && link.enabled && Boolean(link.href);
+const canAttemptMiniProgram = link.type === "miniprogram" && link.enabled && Boolean(link.href);
 const qrImage = link.qrImage;
 
 const typeCopy = {
@@ -24,7 +25,7 @@ const typeCopy = {
   },
   miniprogram: {
     eyebrow: "小程序入口",
-    title: link.label || "小程序名称占位",
+    title: link.miniProgramAppName || link.label || "小程序名称占位",
     description: link.note || "请使用微信扫码打开小程序。"
   },
   wechat_article: {
@@ -115,6 +116,12 @@ const typeCopy = {
                     <strong>label：</strong>
                     {link.label}
                   </div>
+                  {link.miniProgramPath ? (
+                    <div>
+                      <strong>path：</strong>
+                      {link.miniProgramPath}
+                    </div>
+                  ) : null}
                   <div>
                     <strong>note：</strong>
                     {link.note}
@@ -123,13 +130,30 @@ const typeCopy = {
               </div>
 
               <div class="mt-5 flex flex-wrap gap-3">
-                {link.href ? (
+                {link.type === "miniprogram" ? (
+                  canAttemptMiniProgram ? (
+                    <a class="cta-pill" href={link.href} rel="noreferrer">
+                      尝试打开小程序
+                    </a>
+                  ) : (
+                    <span class="soft-btn cursor-not-allowed opacity-70">待补直达链接</span>
+                  )
+                ) : link.href ? (
                   <a class="soft-btn" href={link.href} rel="noreferrer" target="_blank">
                     打开说明链接
                   </a>
                 ) : null}
                 <a class="soft-btn" href="/">返回首页</a>
               </div>
+
+              {link.type === "miniprogram" ? (
+                <div class="mt-5 text-sm leading-7 text-[#8f7d71]">
+                  当前已写入页面路径。
+                  {canAttemptMiniProgram
+                    ? " 若设备支持，会优先尝试直接拉起小程序；若未成功，请使用左侧二维码进入。"
+                    : " 但浏览器无法仅通过页面 path 直接拉起小程序，后续补充微信官方 URL Link 或 URL Scheme 后，这里就会自动优先直达。"}
+                </div>
+              ) : null}
             </div>
           </div>
         )}
@@ -142,6 +166,17 @@ const typeCopy = {
       window.setTimeout(() => {
         window.location.href = href;
       }, 1500);
+    </script>
+  ) : canAttemptMiniProgram ? (
+    <script define:vars={{ href: link.href }}>
+      const ua = window.navigator.userAgent || "";
+      const isWeChat = /MicroMessenger/i.test(ua);
+
+      if (isWeChat || href.startsWith("weixin://") || href.startsWith("https://wxaurl.cn")) {
+        window.setTimeout(() => {
+          window.location.href = href;
+        }, 500);
+      }
     </script>
   ) : null}
 </BaseLayout>

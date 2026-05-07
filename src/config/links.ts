@@ -8,26 +8,32 @@ export interface LinkItem {
   qrImage: string;
   note: string;
   enabled: boolean;
+  miniProgramPath?: string;
+  miniProgramAppName?: string;
 }
 
 export const links: LinkItem[] = [
   {
     key: "signup",
     label: "立即报名",
-    type: "web",
+    type: "miniprogram",
     href: "",
-    qrImage: "",
-    note: "后续可替换为真实报名链接。",
-    enabled: true
+    qrImage: "/assets/qr-signup.svg",
+    note: "优先尝试打开报名小程序页；若当前环境无法直接拉起，请使用微信扫码进入。",
+    enabled: true,
+    miniProgramPath: "pages/selectLevel1/index.html?types=1,2,4,5,6,7",
+    miniProgramAppName: "曹灿杯报名小程序"
   },
   {
     key: "certificate",
     label: "证书查询",
-    type: "web",
+    type: "miniprogram",
     href: "",
-    qrImage: "",
-    note: "后续可替换为真实证书查询链接。",
-    enabled: true
+    qrImage: "/assets/qr-certificate.svg",
+    note: "优先尝试打开证书查询小程序页；若当前环境无法直接拉起，请使用微信扫码进入。",
+    enabled: true,
+    miniProgramPath: "pages/certificateQuery/index.html",
+    miniProgramAppName: "曹灿杯证书查询"
   },
   {
     key: "live",
