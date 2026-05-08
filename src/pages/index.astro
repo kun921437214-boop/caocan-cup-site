@@ -34,17 +34,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           moreHref={getGoPath("official-account")}
           className="min-h-[290px] max-md:min-h-0"
         >
-          <div class="mt-2 flex flex-col gap-[14px]">
+          <div class="mt-2 flex flex-col gap-[14px] pl-[68px] max-[520px]:pl-0">
             {homeContent.notices.items.map((item) => (
-              <div class="grid grid-cols-[44px_1fr_auto] items-start gap-1 text-[#4d443d] max-[520px]:grid-cols-[44px_1fr]">
-                <div class="mt-0.5">
-                  {item.tag ? <span class="notice-pill">{item.tag}</span> : <span class="block w-full"></span>}
-                </div>
+              <div class="relative grid grid-cols-[1fr_auto] items-start gap-3 text-[#4d443d] max-[520px]:grid-cols-[auto_1fr]">
+                {item.tag ? (
+                  <div class="absolute left-[-68px] top-0 mt-0.5 max-[520px]:static max-[520px]:mr-2">
+                    <span class="notice-pill">{item.tag}</span>
+                  </div>
+                ) : null}
                 <a
                   href={item.href}
                   target="_blank"
                   rel="noreferrer"
-                  class="text-[15px] leading-[1.55] transition-colors duration-200 hover:text-[#c53b1c]"
+                  class="text-[15px] leading-[1.55] transition-colors duration-200 hover:text-[#c53b1c] max-[520px]:col-start-2"
                 >
                   {item.text}
                 </a>
