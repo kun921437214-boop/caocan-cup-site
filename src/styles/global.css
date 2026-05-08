@@ -160,7 +160,7 @@
   }
 
   .notice-pill {
-    @apply rounded-md px-2 py-[3px] text-xs text-white;
+    @apply inline-flex min-w-[40px] items-center justify-center rounded-md px-2 py-[3px] text-xs text-white;
     background: linear-gradient(180deg, #ff8d5a, #f04b32);
   }
 
