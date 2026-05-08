@@ -30,8 +30,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         <InfoCard
           id="notice"
           title={homeContent.notices.title}
-          moreText="查看更多 ›"
-          moreHref={getGoPath("article")}
+          moreText="关注公众号查看更多 ›"
+          moreHref={getGoPath("official-account")}
           className="min-h-[290px] max-md:min-h-0"
         >
           <div class="mt-2 flex flex-col gap-[14px]">
@@ -40,10 +40,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
                 <div class="mt-0.5">
                   {item.tag ? <span class="notice-pill">{item.tag}</span> : <span class="block w-8"></span>}
                 </div>
-                <div class="text-[15px] leading-[1.55]">{item.text}</div>
-                <div class="whitespace-nowrap text-[13px] text-[#9b8d84] max-[520px]:col-start-2 max-[520px]:row-start-2">
-                  {item.date}
-                </div>
+                <a
+                  href={item.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  class="text-[15px] leading-[1.55] transition-colors duration-200 hover:text-[#c53b1c]"
+                >
+                  {item.text}
+                </a>
+                {item.date ? (
+                  <div class="whitespace-nowrap text-[13px] text-[#9b8d84] max-[520px]:col-start-2 max-[520px]:row-start-2">
+                    {item.date}
+                  </div>
+                ) : null}
               </div>
             ))}
           </div>

@@ -58,8 +58,8 @@ export const links: LinkItem[] = [
     label: "官方公众号",
     type: "official_account",
     href: "",
-    qrImage: "",
-    note: "请使用微信扫码关注公众号，后续可替换真实二维码与公众号名称。",
+    qrImage: "/assets/official-account-qr.png",
+    note: "请使用微信扫码关注公众号，获取更多活动资讯。",
     enabled: true
   },
   {
@@ -67,8 +67,8 @@ export const links: LinkItem[] = [
     label: "公众号文章",
     type: "wechat_article",
     href: "",
-    qrImage: "",
-    note: "请使用微信扫码或在微信内打开文章，后续可替换真实文章二维码或链接。",
+    qrImage: "/assets/official-account-qr.png",
+    note: "请使用微信扫码或长按识别二维码跳转至公众号查看更多精彩内容。",
     enabled: true
   },
   {

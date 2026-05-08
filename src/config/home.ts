@@ -7,7 +7,8 @@ export interface HeroAction {
 export interface NoticeItem {
   tag?: string;
   text: string;
-  date: string;
+  href: string;
+  date?: string;
 }
 
 export interface ProcessStep {
@@ -55,25 +56,25 @@ export const homeContent = {
     items: [
       {
         tag: "置顶",
-        text: "第十二届“曹灿杯”朗诵展示活动报名启动啦！",
-        date: "2024-05-20"
+        text: "第十二届“曹灿杯”报名攻略",
+        href: "https://mp.weixin.qq.com/s/h8WDY1UdX_NLYT7RypHrbg"
       },
       {
         tag: "置顶",
-        text: "关于举办第十二届“曹灿杯”朗诵展示活动的通知",
-        date: "2024-05-18"
+        text: "第十二届“曹灿杯”总展示举办城市、时间发布",
+        href: "https://mp.weixin.qq.com/s/PLBc3wOGagygVPQGGeYaKw"
       },
       {
-        text: "第十二届“曹灿杯”朗诵展示活动章程",
-        date: "2024-05-15"
+        text: "朗诵学习的“3个不重要”和“6个很重要”",
+        href: "https://mp.weixin.qq.com/s/3lVCC8uuAlhveCsHxGG4bw"
       },
       {
-        text: "各地区线下展示活动安排公告",
-        date: "2024-05-12"
+        text: "朗诵选材“5要”和“5不要”",
+        href: "https://mp.weixin.qq.com/s/lRpDWGGrg2M4dA8c1EqirQ"
       },
       {
-        text: "优秀指导教师评选通知",
-        date: "2024-05-10"
+        text: "最靠谱的朗诵选材指南",
+        href: "https://mp.weixin.qq.com/s/y8FjVb3RE8OQBCiJDr-YOg"
       }
     ] satisfies NoticeItem[]
   },
