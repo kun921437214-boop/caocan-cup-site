@@ -34,11 +34,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
           moreHref={getGoPath("official-account")}
           className="min-h-[290px] max-md:min-h-0"
         >
-          <div class="mt-2 flex flex-col gap-[14px] pl-[68px] max-[520px]:pl-0">
+          <div class="mt-2 flex flex-col gap-[14px] pl-[46px] max-[520px]:pl-0">
             {homeContent.notices.items.map((item) => (
               <div class="relative grid grid-cols-[1fr_auto] items-start gap-3 text-[#4d443d] max-[520px]:grid-cols-[auto_1fr]">
                 {item.tag ? (
-                  <div class="absolute left-[-68px] top-0 mt-0.5 max-[520px]:static max-[520px]:mr-2">
+                  <div class="absolute left-[-46px] top-0 mt-0.5 max-[520px]:static max-[520px]:mr-2">
                     <span class="notice-pill">{item.tag}</span>
                   </div>
                 ) : null}
