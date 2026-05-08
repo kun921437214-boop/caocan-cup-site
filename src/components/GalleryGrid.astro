@@ -33,13 +33,13 @@ const { id, title, items } = Astro.props;
               loading="lazy"
             />
             <div class="absolute inset-x-0 bottom-0 bg-[linear-gradient(180deg,rgba(53,19,13,0)_0%,rgba(53,19,13,0.88)_100%)] px-4 pb-3 pt-8 text-white">
-              <div class="flex items-end justify-between gap-3">
+              <div class="grid grid-cols-[1fr_auto] grid-rows-[auto_auto] items-end gap-x-3 gap-y-0.5">
                 <div class="text-sm font-bold tracking-[0.04em] leading-none">{item.caption || "查看图集"}</div>
-                <div class="rounded-full border border-white/35 bg-white/10 px-3.5 py-1.5 text-[10px] font-bold tracking-[0.04em] leading-none backdrop-blur-sm">
+                <div class="row-span-2 self-end rounded-full border border-white/35 bg-white/10 px-3.5 py-1.5 text-[10px] font-bold tracking-[0.04em] leading-none backdrop-blur-sm">
                   点击查看
                 </div>
+                <div class="text-xs leading-none text-white/80">点击查看完整内容</div>
               </div>
-              <div class="mt-0.5 text-xs leading-none text-white/80">点击查看完整内容</div>
             </div>
           </a>
         ) : (
