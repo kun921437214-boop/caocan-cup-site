@@ -36,7 +36,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         >
           <div class="mt-2 flex flex-col gap-[14px]">
             {homeContent.notices.items.map((item) => (
-              <div class="grid grid-cols-[52px_1fr_auto] items-start gap-2 text-[#4d443d] max-[520px]:grid-cols-[52px_1fr]">
+              <div class="grid grid-cols-[44px_1fr_auto] items-start gap-1 text-[#4d443d] max-[520px]:grid-cols-[44px_1fr]">
                 <div class="mt-0.5">
                   {item.tag ? <span class="notice-pill">{item.tag}</span> : <span class="block w-full"></span>}
                 </div>
